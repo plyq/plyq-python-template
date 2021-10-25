@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - '.github/release.txt'
+
+jobs:
+  tagged-release:
+    name: "Tagged Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Read release.txt
+        run: |
+            echo "release=$(head -1 .github/release.txt)" >> $GITHUB_ENV
+      - name: Create tag
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ env.release }}",
+              sha: context.sha
+            })
+      - name: Create release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          automatic_release_tag: "${{ env.release }}"
+          title: "Release ${{ env.release }}"
+          files: |
+            LICENSE.txt
+            CHANGELOG.md
