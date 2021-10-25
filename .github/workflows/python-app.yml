@@ -22,7 +22,7 @@ jobs:
     - name: Test with coverage
       run: |
         pipenv run pytest --cov=app
-        pienv run coverage report --fail-under=100 --show-missing --skip-covered
+        pipenv run coverage report --fail-under=100 --show-missing --skip-covered
     - name: Push tests to codecov
       uses: codecov/codecov-action@v1
       with:
