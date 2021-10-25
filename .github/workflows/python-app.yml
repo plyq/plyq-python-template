@@ -17,12 +17,12 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements/test.txt ]; then pip install -Ur requirements/test.txt; fi
+        python -m pip install --upgrade pip pipenv
+        pipenv install --dev
     - name: Test with coverage
       run: |
-        pytest --cov=app
-        coverage report --fail-under=100 --show-missing --skip-covered
+        pipenv run pytest --cov=app
+        pienv run coverage report --fail-under=100 --show-missing --skip-covered
     - name: Push tests to codecov
       uses: codecov/codecov-action@v1
       with:
