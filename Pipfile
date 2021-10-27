@@ -4,11 +4,19 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+zappa = "==0.54.0"
+werkzeug = "==0.16.1"
+flask = "==1.1.2"
+flask-cors = "*"
+requests = "*"
 
 [dev-packages]
 pre-commit = "*"
 pytest = "*"
 pytest-cov = "*"
+mypy = "*"
+types-requests = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.8"
